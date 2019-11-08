@@ -71,7 +71,7 @@
 
             <div class="find_people_content">
                 <div class="title">
-                    <h2>find prople</h2>
+                    <h2>find people</h2>
                     <hr>
                 </div>
 
