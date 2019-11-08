@@ -16,7 +16,7 @@
                                 <li>func</li>
                             </ul>
                         </div>
-                        <button type="submit btn btn-success">Free++</button>
+                        <button type="submit" class="btn btn-success">Free++</button>
                     </div>
                 </div>
                 <div class="col-6">
@@ -33,7 +33,7 @@
                                 <li>func</li>
                             </ul>
                         </div>
-                        <button type="submit btn btn-success">99.99 $</button>
+                        <button type="submit" class="btn btn-success">99.99 $</button>
                     </div>
                 </div>
             </div>
