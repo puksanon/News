@@ -1,13 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-//index
-const index                     = () => import('@/components/index/index')
+Vue.use(VueRouter);
+const index  = () => import('@/components/index/index')
 
 //main page
-const home                      = () => import('@/components/home/home')
+const home   = () => import('@/components/home/home')
 
 //sing_in staff page 
-const signin                    = () => import('@/components/login/signin')
+const signin = () => import('@/components/login/signin')
 
 //staff profile
 const profile                   = () => import('@/components/profile/profile')
@@ -28,7 +28,6 @@ const insert_external_lecturer  = () => import('@/components/lecturer/insert/ins
 const student_signin            = () => import('@/components/student/signin/signin')
 const student_profile           = () => import('@/components/student/profile/student_profile')
 const my_student_profile        = () => import('@/components/student/profile/my_student_profile')
-Vue.use(VueRouter);
 
 const routes = [
   {

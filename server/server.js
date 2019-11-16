@@ -6,14 +6,9 @@ const cors        = require("cors");
 const bearertoken = require("express-bearer-token");
 const path        = require("path");
 const mkdirp      = require("mkdirp");
-//const ejs         = require("ejs");
-//const axois       = require("axios");
-
 const server = express();
-//const client = express();
 
 const server_port = process.env.PORT || 5000;
-// const client_port = process.env.PORT || 80; // or 443 for https
 
 /* ------------------------ Initialize directories ------------------------*/
 
