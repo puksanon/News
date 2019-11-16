@@ -90,11 +90,11 @@ server.get("*", (req, res) => {
 const serveStatic = require('serve-static')
 
 //here we are configuring dist to serve app files
-server.use('/', serveStatic(path.join(__dirname, './dist')))
+server.use('/', serveStatic(path.join(__dirname, '../dist')))
 
 // this * route is to serve project on different page routes except root `/`
 server.get(/.*/, function (req, res) {
-	res.sendFile(path.join(__dirname, './dist/index.html'))
+	res.sendFile(path.join(__dirname, '../dist/index.html'))
 })
 
 /* ------------------------ RUN SERVER & CLIENT ------------------------- */
