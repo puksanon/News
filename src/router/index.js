@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
-const index  = () => import('../components/index/index')
+const Index  = () => import('../components/index/index')
 
 //main page
 const home   = () => import('@/components/home/home')
@@ -32,8 +32,8 @@ const my_student_profile        = () => import('@/components/student/profile/my_
 const routes = [
   {
     path: '/',
-    name: 'index',
-    component: index
+    name: 'Index',
+    component: Index
   },
   {
     path: '/home',
