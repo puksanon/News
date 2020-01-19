@@ -9,7 +9,10 @@ import VueProgressiveImage from 'vue-progressive-image' // https://www.vuetoolbo
 import VueParticles from 'vue-particles'
 import Veevalidate from 'vee-validate'
 import VueAxios from 'vue-axios'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
 
+Vue.use(VueAwesomeSwiper);
 Vue.use(Veevalidate)
 Vue.use(VueParticles)
 Vue.use(VueProgressiveImage)
@@ -17,6 +20,7 @@ Vue.use(FlagIcon)
 Vue.use(VueVisible)
 Vue.use(VueAxios, Axios)
 Vue.config.productionTip = false;
+
 /* eslint-disable no-new */
 new Vue({
   router,
