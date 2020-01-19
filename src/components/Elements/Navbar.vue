@@ -5,7 +5,7 @@
     height="100px"
     tile
   >
-    <v-toolbar extended>
+    <v-toolbar extended style="padding: 10px;">
       <v-avatar color="red" style="margin-right: 20px;">
         <span class="white--text headline">CJ</span>
       </v-avatar>
