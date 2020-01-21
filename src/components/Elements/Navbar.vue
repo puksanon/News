@@ -7,7 +7,7 @@
   >
     <v-toolbar extended style="padding: 10px;">
       <v-avatar color="red" style="margin-right: 20px;">
-        <span class="white--text headline">CJ</span>
+        <span class="white--text headline">Ns</span>
       </v-avatar>
       <v-toolbar-title><h1>news</h1></v-toolbar-title>
 

@@ -81,10 +81,10 @@
                     <v-col cols="12" sm="6" md="4">
                         <v-list-item>
                             <v-list-item-action>
-                            <v-checkbox v-model="notifications"></v-checkbox>
+                            <v-checkbox v-model="q1"></v-checkbox>
                             </v-list-item-action>
                             <v-list-item-content>
-                            <v-list-item-title>Notifications</v-list-item-title>
+                            <v-list-item-title>SPORT</v-list-item-title>
                             <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
@@ -92,10 +92,10 @@
                     <v-col cols="12" sm="6" md="4">
                         <v-list-item>
                             <v-list-item-action>
-                            <v-checkbox v-model="notifications"></v-checkbox>
+                            <v-checkbox v-model="q2"></v-checkbox>
                             </v-list-item-action>
                             <v-list-item-content>
-                            <v-list-item-title>Notifications</v-list-item-title>
+                            <v-list-item-title>IT</v-list-item-title>
                             <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
@@ -103,10 +103,10 @@
                     <v-col cols="12" sm="6" md="4">
                         <v-list-item>
                             <v-list-item-action>
-                            <v-checkbox v-model="notifications"></v-checkbox>
+                            <v-checkbox v-model="q3"></v-checkbox>
                             </v-list-item-action>
                             <v-list-item-content>
-                            <v-list-item-title>Notifications</v-list-item-title>
+                            <v-list-item-title>GAME</v-list-item-title>
                             <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
@@ -114,10 +114,10 @@
                     <v-col cols="12" sm="6" md="4">
                         <v-list-item>
                             <v-list-item-action>
-                            <v-checkbox v-model="notifications"></v-checkbox>
+                            <v-checkbox v-model="q4"></v-checkbox>
                             </v-list-item-action>
                             <v-list-item-content> 
-                            <v-list-item-title>Notifications</v-list-item-title>
+                            <v-list-item-title>LIFE</v-list-item-title>
                             <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
@@ -125,10 +125,10 @@
                     <v-col cols="12" sm="6" md="4">
                         <v-list-item>
                             <v-list-item-action>
-                            <v-checkbox v-model="notifications"></v-checkbox>
+                            <v-checkbox v-model="q5"></v-checkbox>
                             </v-list-item-action>
                             <v-list-item-content>
-                            <v-list-item-title>Notifications</v-list-item-title>
+                            <v-list-item-title>POLICY</v-list-item-title>
                             <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
@@ -136,10 +136,10 @@
                     <v-col cols="12" sm="6" md="4">
                         <v-list-item>
                             <v-list-item-action>
-                            <v-checkbox v-model="notifications"></v-checkbox>
+                            <v-checkbox v-model="q6"></v-checkbox>
                             </v-list-item-action>
                             <v-list-item-content>
-                            <v-list-item-title>Notifications</v-list-item-title>
+                            <v-list-item-title>NATURE</v-list-item-title>
                             <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
@@ -159,7 +159,12 @@
       return {
         age: "",
         dialog: false,
-        notifications: false,
+        q1:false,
+        q2:false,
+        q3:false,
+        q4:false,
+        q5:false,
+        q6:false,
         sound: true,
         widgets: false,
       }
