@@ -1,9 +1,9 @@
 <template>
   <div class="Index">
     <div class="navbar">
-      <Navbar></Navbar>
+      <Navbar @send_collection="addItem"></Navbar>
     </div>
-    <div class="main_content">
+    <div class="main_content mt-100">
         <div class="block_highlight">
           <CarouselsHighlight></CarouselsHighlight>
         </div>
@@ -14,20 +14,10 @@
               <v-row class="child-flex">
                 <div>
                   <v-toolbar color="elevation-0" style="padding: 5px;">
-                     <v-app-bar-nav-icon  class="hidden-sm-and-up" @click="sidebar = !sidebar"></v-app-bar-nav-icon>
                     <v-toolbar-title><H3>Filter</H3></v-toolbar-title>
 
                     <v-spacer></v-spacer>
-                    <v-text-field
-                            append-icon="mic"
-                            class="mx-4"
-                            flat
-                            hide-details
-                            label="Search"
-                            prepend-inner-icon="search"
-                            solo-inverted
-                          ></v-text-field>
-                          
+                
                   </v-toolbar>
                 </div>
               </v-row>
@@ -240,5 +230,7 @@ export default {
 </script>
 
 <style scoped>
-
+.mt-100{
+  margin-top: 100px;
+}
 </style>

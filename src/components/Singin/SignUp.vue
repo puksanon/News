@@ -1,6 +1,6 @@
 <template>
   <v-row style="padding-left: 25px;">
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
       <template v-slot:activator="{ on }">
         <v-btn color="primary" dark v-on="on">Sign UP</v-btn>
       </template>
