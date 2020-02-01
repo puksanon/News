@@ -4,8 +4,13 @@
       <Navbar @send_collection="addItem"></Navbar>
     </div>
     <div class="main_content mt-100">
+
         <div class="block_highlight">
           <CarouselsHighlight></CarouselsHighlight>
+        </div>
+
+        <div class="HeighlightNew">
+          <HeighlightNew></HeighlightNew>
         </div>
 
         <div class="navbar manu-search">
@@ -15,9 +20,7 @@
                 <div>
                   <v-toolbar color="elevation-0" style="padding: 5px;">
                     <v-toolbar-title><H3>Filter</H3></v-toolbar-title>
-
                     <v-spacer></v-spacer>
-                
                   </v-toolbar>
                 </div>
               </v-row>
@@ -27,9 +30,7 @@
 
         <div class="navbar manu-slidebar" >
           <v-navigation-drawer class="hidden-sm-and-up" 
-            v-model="sidebar"
-         
-            app>
+            v-model="sidebar" app>
             <v-list shaped>
               <v-subheader>COLLECTION TYPES</v-subheader>
               <v-list-item-group color="primary">
@@ -130,7 +131,7 @@
                                   width="1000"
                                 >
                                   <v-card>
-                                        <v-img
+                                    <v-img
                                       class="white--text align-end"
                                       height="400px"
                                       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
@@ -159,7 +160,7 @@
                                   </v-card>
                                 </v-dialog>
                               </div>
-                            </template>
+                          </template>
                         </v-card-actions>
                       </v-img>
                     </v-card>
@@ -173,12 +174,13 @@
 </template>
 
 <script>
-const CarouselsHighlight = () => import("../Elements/CarouselsHighlight")
-const Navbar = () => import('../Elements/Navbar')
+const CarouselsHighlight = () => import("../Elements/CarouselsHighlight");
+const Navbar = () => import('../Elements/Navbar');
+const HeighlightNew = () => import('../Index_comp/HeighlightNew');
 export default {
   name: 'Index',
   components: {
-      Navbar,CarouselsHighlight
+      Navbar,CarouselsHighlight,HeighlightNew
   },
   data: () => ({
       sidebar: false,

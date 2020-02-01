@@ -15,6 +15,7 @@
 
         <v-spacer></v-spacer>
          <v-text-field
+            max-width="500px"
             append-icon="mic"
             class="mx-7 hidden-xs-only" 
             flat
@@ -31,7 +32,7 @@
     <v-navigation-drawer class="hidden-sm-and-up" v-model="sidebar" app>
       <v-list shaped>
         <v-subheader>COLLECTION TYPES</v-subheader>
-        <v-text-field
+          <v-text-field
             class="mx-2" 
             flat
             hide-details
@@ -39,6 +40,7 @@
             prepend-inner-icon="search"
             solo-inverted
           ></v-text-field>
+        
         <v-list-item-group color="primary">
           <v-list-item
             v-for="item in items"
@@ -90,3 +92,10 @@ export default {
     },
 }
 </script>
+
+<style  scoped>
+.search_input{
+  max-width: 500px;
+}
+</style>
+
