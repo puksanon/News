@@ -3,13 +3,14 @@
     <div class="navbar">
       <Navbar @send_collection="addItem"></Navbar>
     </div>
-    <div class="main_content mt-100">
+    <div class="main_content">
 
         <div class="block_highlight">
           <CarouselsHighlight></CarouselsHighlight>
         </div>
 
         <div class="HeighlightNew">
+          <!-- highlight card -->
           <HeighlightNew></HeighlightNew>
         </div>
 
@@ -103,10 +104,10 @@
               </v-toolbar>
             </v-card>
 
-            <div class="new_content" style="min-height: 500px;">
+            <div class="new_content bg-color" style="min-height: 500px;">
               <v-container>
                 <v-row>
-                  <v-col cols="12" md="6"  v-for="(item, index) in get_items" :key="'A'+index">
+                  <v-col cols="12" xs="12" sm="6" md="6"  v-for="(item, index) in get_items" :key="'A'+index">
                     <v-card
                       class="mx-auto"
                       color="#385F73"
@@ -223,10 +224,10 @@ export default {
     },
 
     senddata (item) {
-    this.select_data = item
-    console.log(this.select_data)
-    this.data_detail = true;
-  }
+      this.select_data = item
+      console.log(this.select_data)
+      this.data_detail = true;
+    }
   },
 }
 </script>
@@ -235,4 +236,9 @@ export default {
 .mt-100{
   margin-top: 100px;
 }
+
+.bg-color{
+  background-color: #ffffff;
+}
 </style>
+

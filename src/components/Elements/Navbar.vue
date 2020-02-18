@@ -1,73 +1,489 @@
 <template>
-  <div class="nav_navi">
-    <v-card class="overflow-hidden">
-      <v-app-bar
-        fixed
-        color="white"
-        style="border-radius: 0;"
-        height="100"
-      >
-        <v-app-bar-nav-icon  class="hidden-sm-and-up" @click="sidebar = !sidebar"></v-app-bar-nav-icon>
-        <v-avatar color="red" style="margin-right: 20px;">
-          <span class="white--text headline">Ns</span>
-        </v-avatar>
-        <v-toolbar-title><h1>news</h1></v-toolbar-title>
+    <div class="no-signin" v-if="username === '' ">
+        <div class="nav_navi">
+            <v-card class="overflow-hidden">
+                <v-app-bar
+                    fixed
+                    flat
+                    color="transparent "
+                    style="border-radius: 0;"
+                    height="100"
+                >
+                    <v-app-bar-nav-icon  class="hidden-sm-and-up" @click="sidebar = !sidebar"></v-app-bar-nav-icon>
+                    <v-avatar size="45px" style="margin-right: 20px;">
+                    <img
+                        src="../../../public/images/NEWs-logo-icon.png"
+                        color="transparent"
+                        alt="news"
+                    >
+                    </v-avatar>
+                    <v-btn text color="transparent" to="/">
+                    <h1 class="black--text">news</h1>
+                    </v-btn>
+                    
+                    <v-spacer></v-spacer>
+                    <v-form>
+                        <v-row justify="center">
 
-        <v-spacer></v-spacer>
-         <v-text-field
-            max-width="500px"
-            append-icon="mic"
-            class="mx-7 hidden-xs-only" 
-            flat
-            hide-details
-            label="Search"
-            prepend-inner-icon="search"
-            solo-inverted
-          ></v-text-field>
-        <Signin></Signin>
-      
-      </v-app-bar>
-    </v-card>
+                            <!-- sign in card comp -->
+                            <v-dialog v-model="dialog" persistent max-width="600px">
+                                <template v-slot:activator="{ on }">
+                                    <v-text-field
+                                        max-width="80px"
+                                        append-icon="mic"
+                                        class="mx-7 hidden-xs-only" 
+                                        flat
+                                        hide-details
+                                        label="Search"
+                                        prepend-inner-icon="search"
+                                        solo-inverted
+                                    ></v-text-field>
+                                    <v-spacer></v-spacer>
+                                    
+                                    <v-btn icon>
+                                        <v-icon style="font-size: 40px;" color="black" dark v-on="on">mdi-account-circle</v-icon>
+                                    </v-btn>
+                                </template>
+                                <v-card>
+                                    <v-card-title>
+                                        <span class="headline">Sign in</span>
+                                    </v-card-title>
+                                    <v-card-text>
+                                    <v-container>
+                                        <v-row>
+                                            <v-col cols="12">
+                                                <v-text-field label="Email*" required></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12">
+                                                <v-text-field label="Password*" type="password" required></v-text-field>
+                                            </v-col>       
+                                        </v-row>
+                                    </v-container>
+                                    <small>*indicates required field</small>
+                                    </v-card-text>
+                                    <v-card-actions>
+                                        <!-- sign up comp -->
+                                        <SignUp></SignUp>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                                        <v-btn color="blue darken-1" text :to="'/dashboard'">Sign in</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                        </v-row>
+                    </v-form>    
+                </v-app-bar>
+            </v-card>
 
-    <v-navigation-drawer class="hidden-sm-and-up" v-model="sidebar" app>
-      <v-list shaped>
-        <v-subheader>COLLECTION TYPES</v-subheader>
-          <v-text-field
-            class="mx-2" 
-            flat
-            hide-details
-            label="Search"
-            prepend-inner-icon="search"
-            solo-inverted
-          ></v-text-field>
-        
-        <v-list-item-group color="primary">
-          <v-list-item
-            v-for="item in items"
-            :key="item.id"
-            @click="addItem(item.name)"
-          >
-            <v-list-item-icon>
-              <v-icon :color="item.color" v-text="item.icon"></v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.name"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-  </div>
+            <v-navigation-drawer class="hidden-sm-and-up" v-model="sidebar" app>
+                <v-list shaped>
+                    <v-subheader>COLLECTION TYPES</v-subheader>
+                    <v-text-field
+                        class="mx-2" 
+                        flat
+                        hide-details
+                        label="Search"
+                        prepend-inner-icon="search"
+                        solo-inverted
+                    ></v-text-field>
+                    
+                    <v-list-item-group color="primary">
+                    <v-list-item
+                        v-for="item in items"
+                        :key="item.id"
+                        @click="addItem(item.name)"
+                    >
+                        <v-list-item-icon>
+                        <v-icon :color="item.color" v-text="item.icon"></v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                        <v-list-item-title v-text="item.name"></v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                    </v-list-item-group>
+                </v-list>
+            </v-navigation-drawer>
+        </div>
+    </div>
+    <div class="admin_navbar" v-else-if="username === 'admin'">
+        <div class="nav_navi">
+            <v-card class="overflow-hidden">
+                <v-app-bar
+                    fixed
+                    flat
+                    color="transparent "
+                    style="border-radius: 0;"
+                    height="100"
+                >
+                    <v-app-bar-nav-icon  class="hidden-md-and-up" @click="sidebar = !sidebar"></v-app-bar-nav-icon>
+                    <v-avatar size="45px">
+                    <img
+                        src="../../../public/images/NEWs-logo-icon.png"
+                        color="transparent"
+                        alt="news"
+                    >
+                    </v-avatar>
+                    <v-btn text color="transparent" to="/">
+                    <h1 class="black--text">news</h1>
+                    </v-btn>
+
+                    <div class="navbar_manu hidden-sm-and-down text-uppercase ">
+                        
+                        <v-btn class="mr-5" text height="40" to="/">
+                            <span class="font-weight-black fz-20">Home</span>  
+                        </v-btn>
+
+                        <v-btn class="mr-5" text height="40" to="/dashboard">
+                            <span class="font-weight-black fz-20">Dashboard</span>  
+                        </v-btn>    
+
+                        <v-menu
+                            open-on-hover
+                            transition="slide-x-transition"
+                            bottom
+                            right
+                            offset-y
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-btn class="mr-5" text  height="40" v-on="on">
+                                    <span class="font-weight-black fz-20">Manage</span>  
+                                </v-btn>  
+                            </template> 
+                            <v-list shaped>
+                            <v-list-item-group color="primary">
+                                <v-list-item v-for="(item , i) in manage" :key="i" :to="item.link">
+                                    <v-list-item-icon>
+                                        <v-icon v-text="item.icon"></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                                </v-list-item>
+                            </v-list-item-group>       
+                            </v-list>
+                        </v-menu>  
+                    </div>
+                          
+                    <v-spacer></v-spacer>
+                    <v-card color="transparent" flat>
+                        <v-row>
+                            <v-text-field
+                            max-width="90px"
+                            append-icon="mic"
+                            class="mx-7 mx-w hidden-xs-only" 
+                            flat
+                            hide-details
+                            label="Search"
+                            prepend-inner-icon="search"
+                            solo-inverted
+                        ></v-text-field>
+                        <v-spacer></v-spacer>
+                        <v-menu
+                            open-on-hover
+                            transition="slide-x-transition"
+                            bottom
+                            right
+                            offset-y
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-btn depressed color='transparent' height="50" v-on="on">
+                                    <span style="margin-right: 10px;" color="black">{{ username }}</span>
+                                    <v-avatar
+                                        size="40px"
+                                    >
+                                        <img
+                                        alt="Avatar"
+                                        src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
+                                        >
+                                    </v-avatar>   
+                                </v-btn>  
+                            </template> 
+                            <v-list shaped>
+                                <v-list-item-group color="primary">
+                                    <v-list-item @click="Signout()">
+                                        <v-list-item-action>
+                                            <v-icon>mdi-heart</v-icon>
+                                        </v-list-item-action>
+                                        <v-list-item-title>Sign out</v-list-item-title>
+                                    </v-list-item>
+                                </v-list-item-group>    
+                            </v-list>
+                        </v-menu>  
+                        </v-row>
+                        
+                    </v-card>
+                </v-app-bar>
+            </v-card>
+
+            <v-navigation-drawer class="hidden-md-and-up" v-model="sidebar" app>
+                <v-list shaped>
+                    <v-subheader>MENU</v-subheader>
+                    <v-text-field
+                        class="mx-2 mb-2" 
+                        flat
+                        hide-details
+                        label="Search"
+                        prepend-inner-icon="search"
+                        solo-inverted
+                    ></v-text-field>
+
+                    <v-list-item-group color="primary">
+                        <v-list-item to="/">
+                            <v-list-item-icon>
+                                <v-icon>mdi-home</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title>Home</v-list-item-title>
+                        </v-list-item>
+
+                        <v-list-item to="/dashboard">
+                            <v-list-item-icon>
+                                <v-icon>mdi-home</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title>Dashboard</v-list-item-title>
+                        </v-list-item>
+                    </v-list-item-group>    
+
+                    <v-list-group
+                        prepend-icon="account_circle"
+                        value="true"
+                    >
+
+                        <template v-slot:activator>
+                            <v-list-item-title>MANAGE</v-list-item-title>
+                        </template>
+                        
+                            <v-list-item-group color="primary">
+                                <v-list-item v-for="(item , i) in manage" :key="i" :to="item.link">
+                                    <v-list-item-icon>
+                                        <v-icon v-text="item.icon"></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                                </v-list-item>
+                            </v-list-item-group>    
+                    </v-list-group>        
+
+
+                    <v-list-group
+                        prepend-icon="account_circle"
+                        value="true"
+                    >
+
+                        <template v-slot:activator>
+                            <v-list-item-title>News Collections</v-list-item-title>
+                        </template>
+                        
+                            <v-list-item-group color="primary">
+                                <v-list-item
+                                    v-for="item in items"
+                                    :key="item.id"
+                                    @click="addItem(item.name)"
+                                >
+                                    <v-list-item-icon>
+                                        <v-icon :color="item.color" v-text="item.icon"></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                    <v-list-item-title v-text="item.name"></v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list-item-group>
+                    </v-list-group>        
+                </v-list>
+            </v-navigation-drawer>
+        </div>
+    </div>
+    <div class="user_navbar" v-else>
+        <<div class="nav_navi">
+            <v-card class="overflow-hidden">
+                <v-app-bar
+                    fixed
+                    flat
+                    color="transparent "
+                    style="border-radius: 0;"
+                    height="100"
+                >
+                    <v-app-bar-nav-icon  class="hidden-md-and-up" @click="sidebar = !sidebar"></v-app-bar-nav-icon>
+                    <v-avatar size="45px">
+                    <img
+                        src="../../../public/images/NEWs-logo-icon.png"
+                        color="transparent"
+                        alt="news"
+                    >
+                    </v-avatar>
+                    <v-btn text color="transparent" to="/">
+                    <h1 class="black--text">news</h1>
+                    </v-btn>
+
+                    <div class="navbar_manu hidden-sm-and-down text-uppercase ">
+                        
+                        <v-btn class="mr-5" text height="40" to="/">
+                            <span class="font-weight-black fz-20">Home</span>  
+                        </v-btn>
+
+                        <v-btn class="mr-5" text height="40" to="/dashboard">
+                            <span class="font-weight-black fz-20">Dashboard</span>  
+                        </v-btn>    
+
+                        <v-menu
+                            open-on-hover
+                            transition="slide-x-transition"
+                            bottom
+                            right
+                            offset-y
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-btn class="mr-5" text  height="40" v-on="on">
+                                    <span class="font-weight-black fz-20">Manage</span>  
+                                </v-btn>  
+                            </template> 
+                            <v-list shaped>
+                            <v-list-item-group color="primary">
+                                <v-list-item v-for="(item , i) in user_manage" :key="i" :to="item.link">
+                                    <v-list-item-icon>
+                                        <v-icon v-text="item.icon"></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                                </v-list-item>
+                            </v-list-item-group>       
+                            </v-list>
+                        </v-menu>  
+                    </div>
+                          
+                    <v-spacer></v-spacer>
+                    <v-card color="transparent" flat>
+                        <v-row>
+                            <v-text-field
+                            max-width="90px"
+                            append-icon="mic"
+                            class="mx-7 mx-w hidden-xs-only" 
+                            flat
+                            hide-details
+                            label="Search"
+                            prepend-inner-icon="search"
+                            solo-inverted
+                        ></v-text-field>
+                        <v-spacer></v-spacer>
+                        <v-menu
+                            open-on-hover
+                            transition="slide-x-transition"
+                            bottom
+                            right
+                            offset-y
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-btn depressed color='transparent' height="50" v-on="on">
+                                    <span style="margin-right: 10px;" color="black">{{ username }}</span>
+                                    <v-avatar
+                                        size="40px"
+                                    >
+                                        <img
+                                        alt="Avatar"
+                                        src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
+                                        >
+                                    </v-avatar>   
+                                </v-btn>  
+                            </template> 
+                            <v-list shaped>
+                                <v-list-item-group color="primary">
+                                    <v-list-item @click="Signout()">
+                                        <v-list-item-action>
+                                            <v-icon>mdi-heart</v-icon>
+                                        </v-list-item-action>
+                                        <v-list-item-title>Sign out</v-list-item-title>
+                                    </v-list-item>
+                                </v-list-item-group>    
+                            </v-list>
+                        </v-menu>  
+                        </v-row>
+                        
+                    </v-card>
+                </v-app-bar>
+            </v-card>
+
+            <v-navigation-drawer class="hidden-md-and-up" v-model="sidebar" app>
+                <v-list shaped>
+                    <v-subheader>MENU</v-subheader>
+                    <v-text-field
+                        class="mx-2 mb-2" 
+                        flat
+                        hide-details
+                        label="Search"
+                        prepend-inner-icon="search"
+                        solo-inverted
+                    ></v-text-field>
+
+                    <v-list-item-group color="primary">
+                        <v-list-item to="/">
+                            <v-list-item-icon>
+                                <v-icon>mdi-home</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title>Home</v-list-item-title>
+                        </v-list-item>
+
+                        <v-list-item to="/dashboard">
+                            <v-list-item-icon>
+                                <v-icon>mdi-home</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title>Dashboard</v-list-item-title>
+                        </v-list-item>
+                    </v-list-item-group>    
+
+                    <v-list-group
+                        prepend-icon="account_circle"
+                        value="true"
+                    >
+
+                        <template v-slot:activator>
+                            <v-list-item-title>MANAGE</v-list-item-title>
+                        </template>
+                        
+                            <v-list-item-group color="primary">
+                                <v-list-item v-for="(item , i) in user_manage" :key="i" :to="item.link">
+                                    <v-list-item-icon>
+                                        <v-icon v-text="item.icon"></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                                </v-list-item>
+                            </v-list-item-group>    
+                    </v-list-group>        
+
+
+                    <v-list-group
+                        prepend-icon="account_circle"
+                        value="true"
+                    >
+
+                        <template v-slot:activator>
+                            <v-list-item-title>News Collections</v-list-item-title>
+                        </template>
+                        
+                            <v-list-item-group color="primary">
+                                <v-list-item
+                                    v-for="item in items"
+                                    :key="item.id"
+                                    @click="addItem(item.name)"
+                                >
+                                    <v-list-item-icon>
+                                        <v-icon :color="item.color" v-text="item.icon"></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                    <v-list-item-title v-text="item.name"></v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list-item-group>
+                    </v-list-group>        
+                </v-list>
+            </v-navigation-drawer>
+        </div>
+    </div>
 </template>
 
 <script>
-const Signin = () => import("../Singin/SignIn")
+const SignUp = () => import("@/components/Singin/SignUp");
 export default {
-    name : 'Navbar',
-    components:{ Signin },
-    data () {
-      return {
-        colors: [
+    name: "Signin",
+    components: { SignUp },
+    data: () => ({
+      dialog: false,
+      username : 'admin',
+      colors: [
           'indigo',
           'warning',
           'pink darken-2',
@@ -81,21 +497,36 @@ export default {
         { id:"4" ,name: "ENTERTAIN" ,icon: "mdi-glass-tulip" ,color: "teal lighten-2"},
         { id:"5" ,name: "POLICY" ,icon: "mdi-web"    ,color: "yellow lighten-2"},
         ],
+        manage:[
+            { title: "Profile setting" , link: "/profile_setting" , icon: "mdi-web"},
+            { title: "Manage News" , link: "/manage_news" , icon: "mdi-web"},
+            { title: "Manage Users" , link: "/manage_users" , icon: "mdi-web"},
+        ],
+        user_manage:[
+            { title: "Profile setting" , link: "/profile_setting" , icon: "mdi-web"},
+        ],
         sidebar: false,
-      }
-    },
+    }),
 
-    methods: {
-      addItem(item){
+    methods:{
+        Signout: function(){
+            this.username = ""
+        },
+
+        addItem: function(item){
         this.$emit("send_collection", item);
       }
-    },
+    }
 }
 </script>
 
 <style  scoped>
-.search_input{
-  max-width: 500px;
+.mx-w{
+    max-width: 200px;
+}
+
+.fz-20{
+    font-size: 14px;
+    color: white;
 }
 </style>
-
