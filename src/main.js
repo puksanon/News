@@ -1,29 +1,31 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+import { store }      from './store'
 import vuetify from "./plugins/vuetify";
 import Axios from 'axios'
-import FlagIcon from 'vue-flag-icon'
-import VueVisible from 'vue-visible'
-import VueProgressiveImage from 'vue-progressive-image' // https://www.vuetoolbox.com/projects/vue-progressive-image
-import VueParticles from 'vue-particles'
 import Veevalidate from 'vee-validate'
 import VueAxios from 'vue-axios'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import VueSweetalert2 from 'vue-sweetalert2';
+const fb = require ('./firebase/firebaseInit')
 
-Vue.use(VueAwesomeSwiper);
+
 Vue.use(Veevalidate)
-Vue.use(VueParticles)
-Vue.use(VueProgressiveImage)
-Vue.use(FlagIcon)
-Vue.use(VueVisible)
 Vue.use(VueAxios, Axios)
+Vue.use(VueSweetalert2);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
-new Vue({
-  router,
-  vuetify,
-  render: h => h(App)
-}).$mount("#app");
+let app
+ // eslint-disable-next-line
+ fb.auth.onAuthStateChanged(user => {
+   if (!app) {
+     app =new Vue({
+      router,
+      store,
+      vuetify,
+      render: h => h(App)
+    }).$mount("#app");
+  }
+})

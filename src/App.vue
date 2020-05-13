@@ -1,15 +1,18 @@
 <template>
   <div id="app">
     <v-app>
+      <Navbar></Navbar>
       <router-view/>
     </v-app>
   </div>
 </template>
 
 <script>
-
+const Navbar = () => import('./components/Elements/Navbar') 
+import { mapState } from 'vuex'
 export default {
-  name: "App"
+  name: "App",
+  components: { Navbar },
 };
 </script>
 

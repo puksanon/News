@@ -2,7 +2,7 @@
 <template>
     <v-carousel
         cycle
-        height="400"
+        height="320"
         hide-delimiter-background
         show-arrows-on-hover
       >
@@ -54,7 +54,7 @@
     box-shadow: none;
     display: block;
     position: absolute;
-    top: 20%;
+    top: 10%;
     left: 5%;
     border-radius: 0%;
   }
