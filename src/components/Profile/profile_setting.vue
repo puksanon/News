@@ -1,6 +1,5 @@
 <template>
     <div class="profile_setting">
-        <Navbar></Navbar>
         <div class="main_content">
             <div class="pl_header">
                 <v-parallax
@@ -9,141 +8,133 @@
                 ></v-parallax>
             </div>
             <div class="setting_content">
-                    <v-card  flat color="transparent">
+                <v-card>
+                    <v-form ref="signup_form" v-model="update_form"> 
                         <v-list three-line subheader>
-                        <v-subheader>User Controls</v-subheader>
-                        <v-list-item>
-                        <v-row>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-list-item-title>First Name</v-list-item-title>
-                                <v-text-field label="First Name" required></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-list-item-title>Last Name</v-list-item-title>
-                                <v-text-field label="Last Name" required></v-text-field>
-                            </v-col> 
-                            <v-col cols="12" sm="6" md="4">
-                                <v-list-item-title>Nick Name</v-list-item-title>
-                                <v-text-field label="Nick Name"  required></v-text-field>
-                            </v-col> 
-                            </v-row>
-                        </v-list-item>
-
-                        <v-list-item>
-                        <v-row>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-list-item-title>Age</v-list-item-title>
-                                <v-select
-                                v-model="age"
-                                :items="['0-17', '18-29', '30-54', '54+']"
-                                label="Age*"
-                                required
-                                ></v-select>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-list-item-title>Email</v-list-item-title>
-                                <v-text-field label="Email" required></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-list-item-title>Phone</v-list-item-title>
-                                <v-text-field label="Phone" required></v-text-field>
-                            </v-col>  
-                            </v-row>
-                        </v-list-item>
-
-                        <v-list-item>
+                            <v-subheader>User Controls</v-subheader>
+                            <v-list-item>
                             <v-row>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-list-item-title>Username</v-list-item-title>
-                                    <v-text-field label="Username" required></v-text-field>
+                                    <v-list-item-title>First Name </v-list-item-title>
+                                    <v-text-field v-model="userProfile.fname" :rules="InputRules" label="First Name" required></v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-list-item-title>Password</v-list-item-title>
-                                    <v-text-field label="Password" type="password" required></v-text-field>
+                                    <v-list-item-title>Last Name</v-list-item-title>
+                                    <v-text-field v-model="userProfile.lname" :rules="InputRules" label="Last Name" required></v-text-field>
+                                </v-col> 
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-list-item-title>Nick Name</v-list-item-title>
+                                    <v-text-field v-model="userProfile.nname" :rules="InputRules" label="Nick Name"  required></v-text-field>
+                                </v-col> 
+                                </v-row>
+                            </v-list-item>
+
+                            <v-list-item>
+                            <v-row>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-list-item-title>Age</v-list-item-title>
+                                    <v-select
+                                    v-model="userProfile.age"
+                                    :items="['0-17', '18-29', '30-54', '54+']"
+                                    label="Age*"
+                                    required
+                                    ></v-select>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
-                                    <v-list-item-title>Confirm Password</v-list-item-title>
-                                    <v-text-field label="Confirm Password"  type="password" required></v-text-field>
+                                    <v-list-item-title>Email</v-list-item-title>
+                                    <v-text-field v-model="userProfile.email" label="Email" :rules="emailRules" required></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-list-item-title>Phone</v-list-item-title>
+                                    <v-text-field v-model="userProfile.phone" label="Phone" :rules="InputRules" required></v-text-field>
                                 </v-col>  
-                            </v-row>
-                        </v-list-item>
-                        </v-list>  
+                                </v-row>
+                            </v-list-item>
+
+                            <v-list-item>
+                                <v-row>
+                                    <v-col cols="12" sm="6" md="4">
+                                        <v-list-item-title>Username</v-list-item-title>
+                                        <v-text-field v-model="userProfile.username" label="Username" :rules="usernameRules" counter="15" required></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="4">
+                                        <v-list-item-title>New Password</v-list-item-title>
+                                        <v-text-field v-model="newpassword" label="New Password"  type="password" counter="15" ></v-text-field>
+                                    </v-col>  
+                                    
+                                </v-row>
+                            </v-list-item>
+                        </v-list>
                         <v-divider></v-divider>
-                <v-list three-line subheader>
-                <v-subheader>Select favorite types(3) </v-subheader>
-                    <v-row>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-list-item>
-                                <v-list-item-action>
-                                <v-checkbox v-model="q1"></v-checkbox>
-                                </v-list-item-action>
-                                <v-list-item-content>
-                                <v-list-item-title>SPORT</v-list-item-title>
-                                <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-list-item>
-                                <v-list-item-action>
-                                <v-checkbox v-model="q2"></v-checkbox>
-                                </v-list-item-action>
-                                <v-list-item-content>
-                                <v-list-item-title>IT</v-list-item-title>
-                                <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-list-item>
-                                <v-list-item-action>
-                                <v-checkbox v-model="q3"></v-checkbox>
-                                </v-list-item-action>
-                                <v-list-item-content>
-                                <v-list-item-title>GAME</v-list-item-title>
-                                <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-list-item>
-                                <v-list-item-action>
-                                <v-checkbox v-model="q4"></v-checkbox>
-                                </v-list-item-action>
-                                <v-list-item-content> 
-                                <v-list-item-title>LIFE</v-list-item-title>
-                                <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-list-item>
-                                <v-list-item-action>
-                                <v-checkbox v-model="q5"></v-checkbox>
-                                </v-list-item-action>
-                                <v-list-item-content>
-                                <v-list-item-title>POLICY</v-list-item-title>
-                                <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                            <v-list-item>
-                                <v-list-item-action>
-                                <v-checkbox v-model="q6"></v-checkbox>
-                                </v-list-item-action>
-                                <v-list-item-content>
-                                <v-list-item-title>NATURE</v-list-item-title>
-                                <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-col>
-                    </v-row>
-                        <div class="btn text-center" >
-                            <v-btn color="danger mr-2" dark>Reset</v-btn>
-                            <v-btn color="primary" dark>Confirm</v-btn>
-                        </div>
-                </v-list> 
+                        <v-list three-line subheader>
+                        <v-subheader>Select favorite types(3)</v-subheader>
+                            <v-row>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-list-item>
+                                        <v-list-item-action>
+                                        <v-checkbox v-model="userProfile.collection[0]"></v-checkbox>
+                                        </v-list-item-action>
+                                        <v-list-item-content>
+                                        <v-list-item-title>SPORT</v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-list-item>
+                                        <v-list-item-action>
+                                        <v-checkbox v-model="userProfile.collection[1]"></v-checkbox>
+                                        </v-list-item-action>
+                                        <v-list-item-content>
+                                        <v-list-item-title>IT</v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-list-item>
+                                        <v-list-item-action>
+                                        <v-checkbox v-model="userProfile.collection[2]"></v-checkbox>
+                                        </v-list-item-action>
+                                        <v-list-item-content>
+                                        <v-list-item-title>GAME</v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-list-item>
+                                        <v-list-item-action>
+                                        <v-checkbox v-model="userProfile.collection[3]"></v-checkbox>
+                                        </v-list-item-action>
+                                        <v-list-item-content> 
+                                        <v-list-item-title>LIFE</v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-list-item>
+                                        <v-list-item-action>
+                                        <v-checkbox v-model="userProfile.collection[4]"></v-checkbox>
+                                        </v-list-item-action>
+                                        <v-list-item-content>
+                                        <v-list-item-title>POLICY</v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-list-item>
+                                        <v-list-item-action>
+                                        <v-checkbox v-model="userProfile.collection[5]"></v-checkbox>
+                                        </v-list-item-action>
+                                        <v-list-item-content>
+                                        <v-list-item-title>NATURE</v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-col>
+                            </v-row>
+                        </v-list> 
+                        <v-card-actions>
+                            <v-btn dark color="primary" :disabled="!update_form" @click="UpdateProfile()">Update Profile</v-btn>        
+                        </v-card-actions> 
+                    </v-form>
                 </v-card>
             </div>
         </div>
@@ -151,25 +142,161 @@
 </template>
 
 <script>
-const Navbar = () => import('@/components/Elements/Navbar');
+import { mapState } from 'vuex'
+import {usersCollection} from '../../firebase/firebaseInit'
+import authHeader from '../../autheader/headers'
 export default {
     name: "profile_setting",
-    components: {
-        Navbar
+    data() {
+        return {
+        newpassword : '',
+        update_form : true,
+        emailRules: [
+            email => !!email || 'E-mail is required',
+            email => /.+@.+\..+/.test(email) || 'E-mail must be valid',
+        ],
+        usernameRules: [
+            username => !!username || 'Username is required',
+            username => (username && username.length <= 15) || 'Username must be less than 15 characters',
+        ],
+        InputRules: [
+            input => !!input || 'input is required',
+        ],
+        passwordRules: [
+            password => !!password || 'Password is required',
+            password => (password && password.length >= 6) || 'Password must be more than 6 characters',
+            password => (password && password.length <= 15) || 'Password must be less than 15 characters',
+        ],
+        }
     },
-    data () {
-      return {
-        age: "",
-        dialog: false,
-        q1:true,
-        q2:false,
-        q3:true,
-        q4:false,
-        q5:true,
-        q6:false,
-        sound: true,
-        widgets: false,
-      }
+
+    computed: {
+        ...mapState(['userProfile','currentUser'])
+    },
+
+    methods:{
+        UpdateProfile : function(){
+            this.$swal.fire({
+                title: 'input password',
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'save',
+                showLoaderOnConfirm: true,
+                preConfirm: (pass) => {
+                    if(this.newpassword){
+                        if(pass === this.userProfile.password){
+                                usersCollection.doc(this.currentUser.uid).update({
+                                    fname       : this.userProfile.fname,
+                                    lname       : this.userProfile.lname,
+                                    age         : this.userProfile.age,
+                                    email       : this.userProfile.email,
+                                    phone       : this.userProfile.phone,
+                                    nname       : this.userProfile.nname,
+                                    username    : this.userProfile.username,
+                                    password    : this.newpassword,
+                                    collection  : [
+                                                    this.userProfile.collection[0],
+                                                    this.userProfile.collection[1],
+                                                    this.userProfile.collection[2],
+                                                    this.userProfile.collection[3],
+                                                    this.userProfile.collection[4],
+                                                    this.userProfile.collection[5],
+                                                  ]
+                                })
+                                .then(response => {
+                                    this.newpassword = '';
+                                    this.$swal({
+                                        toast: true,
+                                        position: 'bottom-end',
+                                        icon: 'success',
+                                        title: 'update success .',
+                                        timerProgressBar: true,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                })
+                                .catch(error => {
+                                    this.$swal({
+                                        toast: true,
+                                        position: 'bottom-end',
+                                        icon: 'error',
+                                        title: 'update false . please try again!!',
+                                        timerProgressBar: true,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                })   
+                        }else{
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                icon: 'error',
+                                title: 'password incorrect',
+                                timerProgressBar: true,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } 
+                    }else{
+                        if(pass === this.userProfile.password){
+                                usersCollection.doc(this.currentUser.uid).update({
+                                    fname       : this.userProfile.fname,
+                                    lname       : this.userProfile.lname,
+                                    age         : this.userProfile.age,
+                                    email       : this.userProfile.email,
+                                    phone       : this.userProfile.phone,
+                                    nname       : this.userProfile.nname,
+                                    username    : this.userProfile.username,
+                                    collection  : [
+                                                    this.userProfile.collection[0],
+                                                    this.userProfile.collection[1],
+                                                    this.userProfile.collection[2],
+                                                    this.userProfile.collection[3],
+                                                    this.userProfile.collection[4],
+                                                    this.userProfile.collection[5],
+                                                ]
+                                })
+                                .then(response => {
+                                    this.$swal({
+                                        toast: true,
+                                        position: 'bottom-end',
+                                        icon: 'success',
+                                        title: 'update success .',
+                                        timerProgressBar: true,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                })
+                                .catch(error => {
+                                    this.$swal({
+                                        toast: true,
+                                        position: 'bottom-end',
+                                        icon: 'error',
+                                        title: 'update false . please try again!!',
+                                        timerProgressBar: true,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                })   
+                        }else{
+                            this.$swal({
+                                toast: true,
+                                position: 'bottom-end',
+                                icon: 'error',
+                                title: 'password incorect',
+                                timerProgressBar: true,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } 
+                    }
+                },
+                allowOutsideClick: () => !this.$swal.isLoading()
+            })
+        }
     },
 
 }

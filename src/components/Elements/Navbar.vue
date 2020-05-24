@@ -11,11 +11,12 @@
                 >
                     <v-avatar size="45px" style="margin-right: 20px;">
                     <img
-                        src="../../../public/images/NEWs-logo-icon.png"
+                        src="../../../public/images/NEWs.png"
                         color="transparent"
                         alt="news"
                     >
                     </v-avatar>
+                     <h2 style="margin-right: 10px; font-weight:bolder;color: #ffffff;" >NEWS</h2>
                     <v-spacer></v-spacer>
                     <v-form>
                         <v-row justify="center">
@@ -24,6 +25,7 @@
                             <v-dialog v-model="dialog" persistent max-width="600px">
                                 <template v-slot:activator="{ on }">                                   
                                     <v-btn icon>
+                                        
                                         <v-icon style="font-size: 40px;" color="#fff" dark v-on="on">mdi-account-circle</v-icon>
                                     </v-btn>
                                 </template>
@@ -88,7 +90,7 @@
                     <v-app-bar-nav-icon  class="hidden-md-and-up" @click="sidebar = !sidebar"></v-app-bar-nav-icon>
                     <v-avatar size="45px" >
                         <img
-                            src="../../../public/images/NEWs-logo-icon.png"
+                            src="../../../public/images/NEWs.png"
                             color="transparent"
                             alt="news-logo"
                         >
@@ -152,7 +154,7 @@
                         >
                             <template v-slot:activator="{ on }">
                                 <v-btn depressed color='transparent' height="50" v-on="on">
-                                    <span style="margin-right: 10px;" color="black">{{ username }}</span>
+                                    <span style="margin-right: 10px; font-weight:bolder;color: #ffffff;" >{{ userProfile.username }}</span>
                                     <v-avatar
                                         size="40px"
                                     >
@@ -165,11 +167,11 @@
                             </template> 
                             <v-list shaped>
                                 <v-list-item-group color="primary">
+                                    <v-list-item to="/profile_setting">
+                                        <v-list-item-title>Profile Setting</v-list-item-title>
+                                    </v-list-item>
                                     <v-list-item @click="Signout()">
-                                        <v-list-item-action>
-                                            <v-icon>mdi-heart</v-icon>
-                                        </v-list-item-action>
-                                        <v-list-item-title @click="Signout()">Sign out</v-list-item-title>
+                                        <v-list-item-title>Sign out</v-list-item-title>
                                     </v-list-item>
                                 </v-list-item-group>    
                             </v-list>
@@ -209,6 +211,7 @@
                     </v-list-item-group>    
 
                     <v-list-group
+                        v-if="userProfile.permission === 'admin'"
                         prepend-icon="account_circle"
                         value="true"
                     >
@@ -225,32 +228,6 @@
                                     <v-list-item-title v-text="item.title"></v-list-item-title>
                                 </v-list-item>
                             </v-list-item-group>    
-                    </v-list-group>        
-
-
-                    <v-list-group
-                        prepend-icon="account_circle"
-                        value="true"
-                    >
-
-                        <template v-slot:activator>
-                            <v-list-item-title>News Collections</v-list-item-title>
-                        </template>
-                        
-                            <v-list-item-group color="primary">
-                                <v-list-item
-                                    v-for="item in items"
-                                    :key="item.id"
-                                    @click="addItem(item.name)"
-                                >
-                                    <v-list-item-icon>
-                                        <v-icon :color="item.color" v-text="item.icon"></v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-content>
-                                    <v-list-item-title v-text="item.name"></v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </v-list-item-group>
                     </v-list-group>        
                 </v-list>
             </v-navigation-drawer>
@@ -279,28 +256,15 @@ export default {
             password => (password && password.length >= 6) || 'Password must be more than 6 characters',
             password => (password && password.length <= 15) || 'Password must be less than 15 characters',
         ],
-        username : 'admin',
         colors: [
             'indigo',
             'warning',
             'pink darken-2',
             'red lighten-1',
             'deep-purple accent-4',
-            ],
-            items: [
-            { id:"1" ,name: "SPORT"  ,icon: "mdi-swim" ,color: "pink lighten-2"},
-            { id:"2" ,name: "IT"     ,icon: "mdi-apple"  ,color: "blue lighten-2"},
-            { id:"3" ,name: "GAME"   ,icon: "mdi-gamepad-variant"  ,color: "deep-purple lighten-2"},
-            { id:"4" ,name: "ENTERTAIN" ,icon: "mdi-glass-tulip" ,color: "teal lighten-2"},
-            { id:"5" ,name: "POLICY" ,icon: "mdi-web"    ,color: "yellow lighten-2"},
-            ],
+            ], 
             manage:[
-                { title: "Profile setting" , link: "/profile_setting" , icon: "mdi-web"},
                 { title: "Manage News" , link: "/manage_news" , icon: "mdi-web"},
-                { title: "Manage Users" , link: "/manage_users" , icon: "mdi-web"},
-            ],
-            user_manage:[
-                { title: "Profile setting" , link: "/profile_setting" , icon: "mdi-web"},
             ],
             sidebar: false,
     }),
@@ -318,12 +282,11 @@ export default {
             this.$emit("send_collection", item);
         },
 
-        async SignIn(){
-            this.performingRequest = true
-                await auth.signInWithEmailAndPassword(this.email, this.password).then(user => {
+        SignIn(){
+             auth.signInWithEmailAndPassword(this.email, this.password).then(user => {
                     this.$store.commit('setCurrentUser', user)
                     this.$store.dispatch('fetchUserProfile')
-                    this.performingRequest = false
+                    location.reload();
                 }).catch(err => {
                     this.$swal({
                         toast: true,

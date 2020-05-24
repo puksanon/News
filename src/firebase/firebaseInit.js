@@ -13,7 +13,6 @@ const currentUser = auth.currentUser
 // firebase collections
 const usersCollection = database.collection('users')
 
-
 export { 
     database,
     auth,

@@ -45,34 +45,6 @@
                     {{ item.name }}
                       <v-icon :color="item.color">{{ item.icon }}</v-icon>
                   </v-tab>
-
-                  <v-menu
-                    v-if="more.length"
-                    bottom
-                    left
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-btn
-                        text
-                        class="align-self-center mr-4"
-                        v-on="on"
-                      >
-                        more
-                        <v-icon right>mdi-menu-down</v-icon>
-                      </v-btn>
-                    </template>
-
-                    <v-list class="grey lighten-3">
-                      <v-list-item
-                        v-for="item in more"
-                        :key="item"
-                        @click="addItem(item)"
-                        prepend-inner-icon="mdi-phone"
-                      >
-                        {{ item }}
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
                 </v-tabs>
               </template>
             </v-toolbar>
@@ -82,25 +54,30 @@
         <div class="cardListContent bg-color" style="min-height: 500px;">
           <v-container>
             <v-row>
-              <v-col cols="12" xs="12" sm="6" md="6"  v-for="(item, index) in get_items" :key="'A'+index">
+              <v-col cols="12" xs="12" sm="6" md="6"  v-for="item in news" :key="item._id">
                 <v-card
                   class="mx-auto"
                   color="#385F73"
                   dark
-                  height="250"
+                  height="280"
                 >
                   <v-img
                     class="white--text align-end"
-                    height="250px"
-                    src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                    height="280"
+                    :src="item.imageUrl"
                   >
-                    <v-card-title class="headline">{{ item.name }}</v-card-title>
-                    <v-card-subtitle>{{ item.detail }} </v-card-subtitle>
+                    <v-card-title class="headline">{{ item.title }}</v-card-title>
+                    <!-- <v-card-subtitle>{{ item.content }} </v-card-subtitle> -->
                     <v-card-actions>
-                      <v-card-text><v-chip outlined>{{ item.type }}</v-chip></v-card-text>
+                      <v-card-text v-if="item.category !== 'Undefined'">
+                        <v-chip outlined >{{ item.category }}</v-chip>
+                      </v-card-text>
                       <v-spacer></v-spacer>
-                      <v-btn text v-on:click="senddata(item)">READ MORE</v-btn>
-                      <template>
+                      <v-btn text @click="senddata(item)">READ MORE</v-btn>
+                    </v-card-actions>
+                  </v-img>
+                </v-card>
+                <template>
                           <div class="text-center">
                             <v-dialog
                               v-model="data_detail"
@@ -110,20 +87,20 @@
                                 <v-img
                                   class="white--text align-end"
                                   height="400px"
-                                  src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                                  :src="select_data.imageUrl"
                                 ></v-img>
                                 <v-card-title
                                   primary-title
                                 >
-                                  {{ select_data.name }} 
+                                  {{ select_data.title }} 
                                 </v-card-title>
 
                                 <v-card-text>
-                                  {{ select_data.description}}
+                                  {{ select_data.content}}
                                 </v-card-text>
 
                                 <v-card-actions>
-                                  <v-card-text><v-chip outlined>{{ item.type }}</v-chip></v-card-text>
+                                  <v-card-text><v-chip outlined>{{ select_data.category }}</v-chip></v-card-text>
                                   <v-spacer></v-spacer>
                                   <v-btn
                                     color="primary"
@@ -137,9 +114,6 @@
                             </v-dialog>
                           </div>
                       </template>
-                    </v-card-actions>
-                  </v-img>
-                </v-card>
               </v-col>
             </v-row>
           </v-container>
@@ -149,6 +123,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import authHeader from '../../autheader/headers'
 const CarouselsHighlight = () => import("../Elements/CarouselsHighlight");
 const HeighlightNew = () => import('../Index_comp/HeighlightNew');
 export default {
@@ -159,47 +135,58 @@ export default {
   data: () => ({
       sidebar: false,
       data_detail: false,
-      get_items: [],
+      news : [],
       items: [
-       { id:"1" ,name: "SPORT"  ,icon: "mdi-swim" ,color: "pink lighten-2"},
-       { id:"2" ,name: "IT"     ,icon: "mdi-apple"  ,color: "blue lighten-2"},
-       { id:"3" ,name: "GAME"   ,icon: "mdi-gamepad-variant"  ,color: "deep-purple lighten-2"},
-       { id:"4" ,name: "ENTERTAIN" ,icon: "mdi-glass-tulip" ,color: "teal lighten-2"},
-       { id:"5" ,name: "POLICY" ,icon: "mdi-web"    ,color: "yellow lighten-2"},
-      ],
-      more: [
-        'News', 'Maps', 'Books', 'Flights', 'Apps',
-      ],
-      SPORT: [  
-            {id:"1" ,name: "a1", detail:"text", description: "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well." ,type:"SPORT"},
-            {id:"2" ,name: "a2", detail:"text", description:"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well." ,type:"SPORT"},
-            {id:"3" ,name: "a3", detail:"text", description: "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well." ,type:"SPORT"},
-            {id:"4" ,name: "a4", detail:"text", description:"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well." ,type:"SPORT"},
-      ],
-      IT: [ {id:"1" ,name: "c1", detail:"text", description: "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",type:"IT"},
-            {id:"2" ,name: "c2", detail:"text", description: "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.",type:"IT"}
+       { id:"1" ,name: "ข่าวทั้งหมด"  ,icon: "mdi-swim" ,color: "pink lighten-2"},
+       { id:"2" ,name: "สังคม"     ,icon: "mdi-apple"  ,color: "blue lighten-2"},
+       { id:"3" ,name: "การเมือง"   ,icon: "mdi-gamepad-variant"  ,color: "deep-purple lighten-2"},
+       { id:"4" ,name: "ต่างประเทศ" ,icon: "mdi-glass-tulip" ,color: "teal lighten-2"},
+       { id:"5" ,name: "อาชญากรรม" ,icon: "mdi-web"    ,color: "yellow lighten-2"},
+       { id:"6" ,name: "ภูมิภาค" ,icon: "mdi-web"    ,color: "yellow lighten-2"},
       ],
       select_data:[]
   }),
 
   created() {
     this.get_items = this.SPORT
+    this.getNews()
   },
 
-  methods: {
-    addItem (item) {
-      if (item === 'SPORT'){
-        this.get_items = this.SPORT
-        console.log(this.get_items,this.SPORT)
-      }else if(item === 'IT'){
-        this.get_items = this.IT
-      }
+    computed: {
+        ...mapState(['Newsdata'])
     },
 
-    senddata (item) {
-      this.select_data = item
-      console.log(this.select_data)
+  methods: {
+    addItem (category) {
+     const olddata = this.Newsdata;
+     const cate = category;
+     if(category !== 'ข่าวทั้งหมด'){
+       this.news = olddata.filter(({ category }) => cate.includes(category));
+     }else{
+       this.getNews()
+     }
+    },
+
+    senddata: async function (item) {
       this.data_detail = true;
+      this.select_data = await item
+    },
+
+    getNews:async function (){
+      try {
+        const News = await this.axios.request({
+          methods: "get",
+          url : "http://localhost:3000/api/summarizednews",
+          headers : authHeader()
+        }).then(res => {
+          this.news = res.data
+          this.$store.commit('addNewsdata', res.data)
+        }).catch(res => {
+          console.error(res)
+        })
+      } catch (error) {
+        console.error(error)
+      }
     }
   },
 }

@@ -1,11 +1,11 @@
 <template>
   <v-row style="padding-left: 25px;">
     <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
-      <v-form ref="signup_form" v-model="signup_form"> 
         <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark v-on="on">Sign Up</v-btn>
+            <v-btn color="primary" text dark v-on="on">Sign Up</v-btn>
         </template>
         <v-card>
+            <v-form ref="signup_form" v-model="signup_form"> 
             <v-toolbar dark color="primary">
             <v-btn icon dark @click="dialog = false">
                 <v-icon>mdi-close</v-icon>
@@ -13,7 +13,7 @@
             <v-toolbar-title>SIGN UP</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn dark text @:disabled="!signup_form" @click="SingUp()">Sign Up</v-btn>
+                <v-btn dark text :disabled="!signup_form" @click="SingUp()">Sign Up</v-btn>
             </v-toolbar-items>
             </v-toolbar>
         
@@ -140,16 +140,15 @@
                             </v-list-item>
                         </v-col>
                     </v-row>
-                </v-list>
-        
+                </v-list>     
+            </v-form>
         </v-card>
-      </v-form> 
     </v-dialog>
   </v-row>
 </template>
 
 <script>
-import { auth } from '../../firebase/firebaseInit'
+import { auth ,usersCollection} from '../../firebase/firebaseInit'
 export default {
     name: "SignUp",
     data () {
@@ -157,7 +156,6 @@ export default {
         fname       : "",
         lname       : "",
         nname       : "",
-        pid         : "",
         email       : "",
         phone       : "",
         username    : "",
@@ -199,23 +197,14 @@ export default {
                     usersCollection.doc(Uid).set({
                         fname       : this.fname,
                         lname       : this.lname,
-                        pid         : this.pid,
+                        age         : this.age,
                         email       : this.email,
                         phone       : this.phone,
                         nname       : this.nname,
                         username    : this.username,
                         password    : this.password,
-                        permission  : 'user',
-                        collection  : [
-                            {
-                                q1 : this.q1,
-                                q2 : this.q2,
-                                q3 : this.q3,
-                                q4 : this.q4,
-                                q5 : this.q5,
-                                q6 : this.q6,
-                            }
-                        ]
+                        permission  : "user",
+                        collection  :  [this.q1 ,this.q2,this.q3,this.q4,this.q5,this.q6 ]
                     }).then(() =>{
                         this.$swal({
                             toast: true,
@@ -226,7 +215,7 @@ export default {
                             showConfirmButton: false,
                             timer: 1500
                         });
-                        this.$router.push('/login')
+                        this.dialog = false;
                     }).catch(err => {
                         this.$swal({
                             toast: true,
