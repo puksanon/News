@@ -54,6 +54,14 @@
           <v-container>
             <v-row>
               <v-col cols="12" xs="12" sm="6" md="6"  v-for="item in news" :key="item._id">
+                <v-lazy
+                v-model="isActive"
+                :options="{
+                  threshold: .5
+                }"
+                min-height="200"
+                transition="fade-transition"
+              >
                 <v-card
                   class="mx-auto"
                   color="#385F73"
@@ -76,6 +84,7 @@
                     </v-card-actions>
                   </v-img>
                 </v-card>
+                </v-lazy>
                 <template>
                           <div class="text-center">
                             <v-dialog
@@ -132,16 +141,18 @@ export default {
       CarouselsHighlight
   },
   data: () => ({
+     isActive: false,
       sidebar: false,
       data_detail: false,
       news : [],
       items: [
-       { id:"1" ,name: "ข่าวทั้งหมด"  ,icon: "mdi-swim" ,color: "pink lighten-2"},
+       { id:"1" ,name: "ข่าวทั้งหมด"  ,icon: "mdi-briefcase" ,color: "pink lighten-2"},
        { id:"2" ,name: "สังคม"     ,icon: "mdi-apple"  ,color: "blue lighten-2"},
-       { id:"3" ,name: "การเมือง"   ,icon: "mdi-gamepad-variant"  ,color: "deep-purple lighten-2"},
+       { id:"3" ,name: "การเมือง"   ,icon: "mdi-bank"  ,color: "deep-purple lighten-2"},
        { id:"4" ,name: "ต่างประเทศ" ,icon: "mdi-glass-tulip" ,color: "teal lighten-2"},
        { id:"5" ,name: "อาชญากรรม" ,icon: "mdi-web"    ,color: "yellow lighten-2"},
-       { id:"6" ,name: "ภูมิภาค" ,icon: "mdi-web"    ,color: "yellow lighten-2"},
+       { id:"6" ,name: "ภูมิภาค" ,icon: "mdi-earth"    ,color: "red lighten-2"},
+       { id:"7" ,name: "กีฬา" ,icon: "mdi-swim"    ,color: "orange lighten-2"},
       ],
       select_data:[]
   }),

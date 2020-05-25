@@ -28,7 +28,6 @@
                     :src="item.imageUrl"
                   >
                     <v-card-title class="headline">{{ item.title }}</v-card-title>
-                    <!-- <v-card-subtitle>{{ item.content }} </v-card-subtitle> -->
                     <v-card-actions>
                       <v-card-text v-if="item.category !== 'Undefined'">
                         <v-chip outlined >{{ item.category }}</v-chip>
@@ -92,24 +91,19 @@ export default {
         return {
             data_detail : false,
             select_data : [],
-            filtersData : [],
             news        : [],
         }
     },
 
     created(){
         this.getNews();
-    },
-
-    computed:{
-        ...mapState(['userProfile','Newsdata'])
-        
-    },
-
-    beforeMount() {
         this.filtersNews()
     },
 
+    computed:{
+        ...mapState(['userProfile','Newsdata',])
+        
+    },
 
     methods: {
         getNews:async function (){
@@ -181,6 +175,7 @@ export default {
                     }
                 }
             }
+            this.$store.commit('setfilterNews' , this.news )
         }
     },
 }

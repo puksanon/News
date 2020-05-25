@@ -1,16 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import Axios from 'axios'
-import VueAxios from 'vue-axios'
 const fb = require('../firebase/firebaseInit')
 
 Vue.use(Vuex);
-Vue.use(VueAxios, Axios)
 
 fb.auth.onAuthStateChanged(user => {
     if (user) {
         store.commit('setCurrentUser', user)
         store.dispatch('fetchUserProfile')
+        // store.dispatch('filterNews')
 
         fb.usersCollection.doc(user.uid).onSnapshot(doc => {
             store.commit('setUserProfile', doc.data())
@@ -20,9 +18,10 @@ fb.auth.onAuthStateChanged(user => {
 
 export const store = new Vuex.Store({
     state:{
-        currentUser: null,
-        userProfile: {},
-        Newsdata: [],
+        currentUser     : null,
+        userProfile     : {},
+        Newsdata        : [],
+        filterNewsdata  : []
     },
 
     actions: {
@@ -40,6 +39,57 @@ export const store = new Vuex.Store({
                 commit('setUserProfile', {})
             })
         },
+
+
+        // async filterNews({commit ,state}){
+        //     let finishnew 
+
+        //     if(state.userProfile.collections){
+        //         if(state.userProfile.collections[0]){
+        //             const changefilter = 'สังคม'
+        //             const filternew = newstate.Newsdatas.filter(({ category }) => changefilter.includes(category));
+        //             if(filternew.length !== 0){
+        //                 finishnew.push(filternew)
+        //             }
+        //         }
+        //         if(state.userProfile.collections[1]){
+        //             const changefilter = 'การเมือง'
+        //             const filternew = state.Newsdata.filter(({ category }) => changefilter.includes(category));
+        //             if(filternew.length !== 0){
+        //                 finishnew.push(filternew)
+        //             }
+        //         }
+        //         if(state.userProfile.collections[2]){
+        //             const changefilter = 'ต่างประเทศ'
+        //             const  filternew = state.Newsdata.filter(({ category }) => changefilter.includes(category));
+        //             if(filternew.length !== 0){
+        //                 commit('setfilterNews', filternew)
+        //             }
+        //             console.log(filternew)
+        //         }
+        //         if(state.userProfile.collections[3]){
+        //             const changefilter = 'อาชญากรรม'
+        //             const filternew = state.Newsdata.filter(({ category }) => changefilter.includes(category));
+        //             if(filternew.length !== 0){
+        //                 finishnew.push(filternew)
+        //             }
+        //         }
+        //         if(state.userProfile.collections[4]){
+        //             const changefilter = 'ภูมิภาค'
+        //             const filternew = state.Newsdata.filter(({ category }) => changefilter.includes(category));
+        //             if(filternew.length !== 0){
+        //                 finishnew.push(filternew)
+        //             }
+        //         }
+        //         if(state.userProfile.collections[5]){
+        //             const changefilter = 'กีฬา'
+        //             const filternew = state.Newsdata.filter(({ category }) => changefilter.includes(category));
+        //              if(filternew.length !== 0){
+        //                 finishnew.push(filternew)
+        //             }
+        //         }
+        //     }
+        // },
     },
 
     mutations: {
@@ -51,6 +101,9 @@ export const store = new Vuex.Store({
         },
         addNewsdata(state,val){
             state.Newsdata = val
+        },
+        setfilterNews(state,val){
+            state.filterNewsdata = val
         }
     }
 });
