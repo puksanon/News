@@ -122,14 +122,14 @@
 </template>
 
 <script>
+import{ SERVER_PORT } from '../../config/config'
 import { mapState } from 'vuex'
 import authHeader from '../../autheader/headers'
 const CarouselsHighlight = () => import("../Elements/CarouselsHighlight");
-const HeighlightNew = () => import('../Index_comp/HeighlightNew');
 export default {
   name: 'Index',
   components: {
-      CarouselsHighlight,HeighlightNew
+      CarouselsHighlight
   },
   data: () => ({
       sidebar: false,
@@ -174,7 +174,7 @@ export default {
       try {
         const News = await this.axios.request({
           methods: "get",
-          url : "http://localhost:3000/api/summarizednews",
+          url : `${SERVER_PORT}/api/summarizednews`,
           headers : authHeader()
         }).then(res => {
           this.news = res.data

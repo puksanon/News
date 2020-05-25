@@ -119,6 +119,7 @@
 </template>
 
 <script>
+import{ SERVER_PORT } from '../../config/config'
 import  authHeader from '../../autheader/headers'
   export default {
     name: "ManageNews",
@@ -185,7 +186,7 @@ import  authHeader from '../../autheader/headers'
         try {
           const News = await this.axios.request({
             methods: "get",
-            url : "http://localhost:3000/api/summarizednews",
+            url : `${SERVER_PORT}/api/summarizednews`,
             headers : authHeader()
           }).then(res => {
             this.news = res.data
@@ -234,7 +235,7 @@ import  authHeader from '../../autheader/headers'
               try{
                   return  await this.axios.request({
                       method  : 'post',
-                      url     : 'http://localhost:3000/api/summarizednews',
+                      url     : `${SERVER_PORT}/api/summarizednews`,
                       headers :  authHeader(),
                       data    : formData
                           }).then(res => {
@@ -282,7 +283,7 @@ import  authHeader from '../../autheader/headers'
         try {
           const res = await this.axios.request({
             method: 'delete',
-            url: `http://localhost:3000/api/summarizednews/${id}`,
+            url: `${SERVER_PORT}/api/summarizednews/${id}`,
             headers : authHeader()
           }).then((response)=> {
             this.$swal({
@@ -330,7 +331,7 @@ import  authHeader from '../../autheader/headers'
           };
 
           let id = this.editedItem.curriculum_id
-          let url  = `http://localhost:3000/api/summarizednews/${id}`
+          let url  = `${SERVER_PORT}/api/summarizednews/${id}`
 
           try{
               return await this.axios.put(

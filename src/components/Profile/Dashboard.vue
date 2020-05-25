@@ -84,6 +84,7 @@
 
 
 <script>
+import{ SERVER_PORT } from '../../config/config'
 import {mapState} from 'vuex'
 export default {
     name : "DashboardBg",
@@ -115,7 +116,7 @@ export default {
             try {
                 const News = await this.axios.request({
                 methods: "get",
-                url : "http://localhost:3000/api/summarizednews",
+                url : `${SERVER_PORT}/api/summarizednews`,
                 }).then(res => {
                 this.$store.commit('addNewsdata', res.data)
                 }).catch(res => {
