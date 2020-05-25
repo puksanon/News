@@ -5,10 +5,9 @@
           <CarouselsHighlight></CarouselsHighlight>
         </div>
 
-        <div class="HeighlightNew">
-          <!-- highlight card -->
+        <!-- <div class="HeighlightNew">
           <HeighlightNew></HeighlightNew>
-        </div>
+        </div> -->
 
         <div class="navbar manu-search">
           <v-card flat>
@@ -148,7 +147,6 @@ export default {
   }),
 
   created() {
-    this.get_items = this.SPORT
     this.getNews()
   },
 

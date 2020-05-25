@@ -9,7 +9,6 @@ const Index  = () => import('../view/Index/Index.vue')
 const Admin_dashboard = () => import('../view/Admin/Dashboard.vue')
 const Profile_setting = () => import('../view/Profile/Profile')
 const Manage_news     = () => import('../view/Admin/ManageNews')
-const Manage_users    = () => import('../view/Admin/ManageUser')
 
 
 const routes = [
@@ -38,14 +37,6 @@ const routes = [
     path: '/manage_news',
     name: 'manage_news',
     component: Manage_news,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/manage_users',
-    name: 'manage_uaers',
-    component: Manage_users,
     meta: {
       requiresAuth: true
     }

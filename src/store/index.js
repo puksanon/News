@@ -40,19 +40,6 @@ export const store = new Vuex.Store({
                 commit('setUserProfile', {})
             })
         },
-
-        getNews:async function ({ commit, state }){
-            try {
-              const news = await this.axios.get("http://localhost:3000/api/summarizednews"
-              ).then(res => {
-                commit('addNewsdata', res.data)
-              }).catch(res => {
-                console.error(res)
-              })
-            } catch (error) {
-              console.error(error)
-            }
-          }
     },
 
     mutations: {

@@ -85,7 +85,7 @@
                                 <v-checkbox v-model="q1"></v-checkbox>
                                 </v-list-item-action>
                                 <v-list-item-content>
-                                <v-list-item-title>SPORT</v-list-item-title>
+                                <v-list-item-title>สังคม</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-col>
@@ -95,7 +95,7 @@
                                 <v-checkbox v-model="q2"></v-checkbox>
                                 </v-list-item-action>
                                 <v-list-item-content>
-                                <v-list-item-title>IT</v-list-item-title>
+                                <v-list-item-title>การเมื่อง</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-col>
@@ -105,7 +105,7 @@
                                 <v-checkbox v-model="q3"></v-checkbox>
                                 </v-list-item-action>
                                 <v-list-item-content>
-                                <v-list-item-title>GAME</v-list-item-title>
+                                <v-list-item-title>ต่างประเทศ</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-col>
@@ -115,7 +115,7 @@
                                 <v-checkbox v-model="q4"></v-checkbox>
                                 </v-list-item-action>
                                 <v-list-item-content> 
-                                <v-list-item-title>LIFE</v-list-item-title>
+                                <v-list-item-title>อาชญากรรม</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-col>
@@ -125,7 +125,7 @@
                                 <v-checkbox v-model="q5"></v-checkbox>
                                 </v-list-item-action>
                                 <v-list-item-content>
-                                <v-list-item-title>POLICY</v-list-item-title>
+                                <v-list-item-title>ภูมิภาค</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-col>
@@ -135,7 +135,7 @@
                                 <v-checkbox v-model="q6"></v-checkbox>
                                 </v-list-item-action>
                                 <v-list-item-content>
-                                <v-list-item-title>NATURE</v-list-item-title>
+                                <v-list-item-title>กีฬา</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-col>

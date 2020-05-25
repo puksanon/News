@@ -1,13 +1,19 @@
 <template>
     <div class="admin_dashboard">
-        <Navbar></Navbar>
+        <DashboardBg></DashboardBg>
     </div>
 </template>
 
 <script>
-const Navbar = () => import("@/components/Elements/Navbar")
+const DashboardBg = () => import("@/components/Profile/Dashboard")
 export default {
     name : "admin_dashboard",
-    components : { Navbar }
+    components : { DashboardBg }
 }
 </script>
+
+<style  scoped>
+.admin_dashboard{
+    background-color: #ffffff;
+}
+</style>

@@ -134,16 +134,6 @@
                     <v-spacer></v-spacer>
                     <v-card color="transparent" flat>
                         <v-row>
-                            <v-text-field
-                            max-width="90px"
-                            append-icon="mic"
-                            class="mx-7 mx-w hidden-xs-only" 
-                            flat
-                            hide-details
-                            label="Search"
-                            prepend-inner-icon="search"
-                            solo-inverted
-                        ></v-text-field>
                         <v-spacer></v-spacer>
                         <v-menu
                             open-on-hover
@@ -155,14 +145,14 @@
                             <template v-slot:activator="{ on }">
                                 <v-btn depressed color='transparent' height="50" v-on="on">
                                     <span style="margin-right: 10px; font-weight:bolder;color: #ffffff;" >{{ userProfile.username }}</span>
-                                    <v-avatar
+                                    <!-- <v-avatar
                                         size="40px"
                                     >
                                         <img
                                         alt="Avatar"
                                         src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
                                         >
-                                    </v-avatar>   
+                                    </v-avatar>    -->
                                 </v-btn>  
                             </template> 
                             <v-list shaped>
@@ -185,14 +175,6 @@
             <v-navigation-drawer class="hidden-md-and-up" v-model="sidebar" app>
                 <v-list shaped>
                     <v-subheader>MENU</v-subheader>
-                    <v-text-field
-                        class="mx-2 mb-2" 
-                        flat
-                        hide-details
-                        label="Search"
-                        prepend-inner-icon="search"
-                        solo-inverted
-                    ></v-text-field>
 
                     <v-list-item-group color="primary">
                         <v-list-item to="/">

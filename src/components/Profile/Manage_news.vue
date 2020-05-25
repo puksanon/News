@@ -229,9 +229,6 @@ import  authHeader from '../../autheader/headers'
               formData.append('sourceUrl' , this.editedItem.sourceUrl);
               formData.append('publishAt', this.editedItem.publishAt);
               formData.append('publisher' , this.editedItem.publisher);
-              formData.append('tags'  , this.editedItem.tags);  
-              formData.append('language'  , this.editedItem.language);  
-
 
           if (this.$refs.submit_news.validate()) {
               try{
