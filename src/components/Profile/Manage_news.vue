@@ -29,7 +29,7 @@
                                 <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
                             </template>
                             <v-card>
-                              <v-form ref="submit_news" v-model="valid" enctype="multipart/form-data">
+                              <v-form ref="submit_news" v-model="valid" >
                                 <v-card-title>
                                 <span class="headline">{{ formTitle }}</span>
                                 </v-card-title>
@@ -66,19 +66,18 @@
                                         <v-text-field  v-model="editedItem.publishAt" label="publishAt" :rules="inputRules" required></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="12" md="12" v-if="editedIndex === -1 ">
-                                        <v-file-input 
-                                            id="image"
-                                            name="image"
+                                        <v-text-field 
                                             v-model="image"
-                                            ref="image"
-                                            accept=".jpg"
                                             show-size 
-                                            label="File input"
+                                            label="image url"
                                             prepend-icon="mdi-clipboard-text-multiple-outline"
-                                        ></v-file-input>
+                                        ></v-text-field>
                                     </v-col>
                                     <v-col v-if="editedIndex === -1" cols="12" sm="4" md="12">
                                         <v-text-field  v-model="editedItem.tags" label="Tags / Keywords" :rules="inputRules" required></v-text-field>
+                                    </v-col>
+                                    <v-col v-if="editedIndex === -1" cols="12" sm="4" md="12">
+                                        <v-text-field  v-model="editedItem.language" label="language" :rules="inputRules" required></v-text-field>
                                     </v-col>
                                     </v-row>
                                 </v-container>
@@ -221,25 +220,35 @@ import  authHeader from '../../autheader/headers'
       },
 
       async InsertNews(){
-        const formData = new FormData();
-              formData.append('imageUrl'  , this.image );
-              formData.append('title'     , this.editedItem.title);
-              formData.append('content'  , this.editedItem.content);
-              formData.append('author'  , this.editedItem.author);
-              formData.append('category'  , this.editedItem.category);
-              formData.append('sourceUrl' , this.editedItem.sourceUrl);
-              formData.append('publishAt', this.editedItem.publishAt);
-              formData.append('publisher' , this.editedItem.publisher);
+        
+        var today = new Date();
+        var formData = {
+              title     : this.editedItem.title,
+              content   : this.editedItem.content,
+              author    : this.editedItem.author,
+              category  : this.editedItem.category,
+              sourceUrl : this.editedItem.sourceUrl,
+              publishAt : today,
+              publisher : this.editedItem.publisher,
+              language  : this.editedItem.language,
+              tags      : this.editedItem.tags,
+              imageUrl  : this.image,
+          };
+
+          var myJSON = JSON.stringify(formData);
+          console.log(myJSON)
 
           if (this.$refs.submit_news.validate()) {
               try{
-                  return  await this.axios.request({
-                      method  : 'post',
-                      url     : `${SERVER_PORT}/api/summarizednews`,
-                      headers :  authHeader(),
-                      data    : formData
-                          }).then(res => {
-                              if(res.data.success){
+                  return  await this.axios.post(
+                      `${SERVER_PORT}/api/summarizednews`,
+                      myJSON,
+                      { headers : 
+                         {
+                           'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3VtbWFyaXplU2VydmVyIiwiZHQiOiIyMDE2LTA4LTI5VDA5OjEyOjMzLjAwMVoiLCJpYXQiOjE1OTAwMTcxMjN9.5644l8oVxelZBIBUIajc-mPwMG0nqEVwZk9248FR74Y',
+                          'Content-Type'  : 'application/json',
+                         }
+                      }).then(res => {
                                   this.$swal({
                                       toast: true,
                                       position: 'bottom-end',
@@ -249,18 +258,7 @@ import  authHeader from '../../autheader/headers'
                                       showConfirmButton: false,
                                       timer: 1500
                                   });
-                                  this.$router.push('/home')
-                              }else{
-                                  this.$swal({
-                                      toast: true,
-                                      position: 'bottom-end',
-                                      icon: 'error',
-                                      title: `${res.data.message}`,
-                                      timerProgressBar: true,
-                                      showConfirmButton: false,
-                                      timer: 1500
-                                  });
-                              }
+                                  this.getNews()
                           })
                           .catch(err => {
                               this.$swal({
@@ -290,11 +288,12 @@ import  authHeader from '../../autheader/headers'
                 toast: true,
                 position: 'bottom-end',
                 icon: 'success',
-                title: response,
+                title: 'Delete new success',
                 timerProgressBar: true,
                 showConfirmButton: false,
                 timer: 1500
             });
+            this.getNews()
           }).catch((error) =>{
             this.$swal({
                 toast: true,
@@ -330,7 +329,7 @@ import  authHeader from '../../autheader/headers'
               return Object.keys(data).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join('&');
           };
 
-          let id = this.editedItem.curriculum_id
+          let id = this.editedItem._id
           let url  = `${SERVER_PORT}/api/summarizednews/${id}`
 
           try{
@@ -348,7 +347,7 @@ import  authHeader from '../../autheader/headers'
                           showConfirmButton: false,
                           timer: 1500
                   });
-                  this.intialCuriculum();
+                  this.getNews()
                   this.dialog = false;
               }).catch(err => {
                   this.$swal({

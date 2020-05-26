@@ -15,7 +15,7 @@ Vue.use(Veevalidate)
 Vue.use(VueAxios, Axios)
 Vue.use(VueSweetalert2)
 
-Vue.config.productionTip = true;
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 let app
